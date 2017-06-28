@@ -1,0 +1,11 @@
+
+out/production/Library/app/Library.class
+.idea/kotlinc.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/uiDesigner.xml
+out/production/Library/utils/DataReader.class
+out/production/Library/data/Book.class
+library/
+Library.iml
+.idea/workspace.xml
