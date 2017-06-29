@@ -5,6 +5,8 @@ package data;
  */
 // klasa dziedziczy z klasy publikacje kilka rzeczy
 public class Book extends Publication {
+    private static final long serialVersionUID = -7907331751072277846L;
+
     // POLA do wpisania
     private String author;
     private int pages;

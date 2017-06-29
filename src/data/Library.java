@@ -3,10 +3,14 @@ package data;
 import data.Book;
 import utils.DataReader;
 
+import java.io.Serializable;
+
 /**
  * Created by Pawel on 16.05.2017.
  */
-public class Library {
+public class Library implements Serializable {
+    private static final long serialVersionUID = 2995794334600947814L;
+
     public static final int MAX_PUBLICATIONS=2000;
     private Publication[] publications;
     private int publicationsNumber;

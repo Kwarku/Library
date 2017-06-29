@@ -4,6 +4,8 @@ package data;
  * Created by Pawel on 07.06.2017.
  */
 public class Magazine extends Publication {
+    private static final long serialVersionUID = 2061400934707882805L;
+
     //pola
     private int month;
     private int day;
