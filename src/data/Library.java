@@ -4,6 +4,7 @@ import data.Book;
 import utils.DataReader;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Created by Pawel on 16.05.2017.
@@ -11,7 +12,7 @@ import java.io.Serializable;
 public class Library implements Serializable {
     private static final long serialVersionUID = 2995794334600947814L;
 
-    public static final int MAX_PUBLICATIONS=2000;
+    public static final int INITIAL_COMPACITY=1;
     private Publication[] publications;
     private int publicationsNumber;
 
@@ -23,7 +24,7 @@ public class Library implements Serializable {
     }
 
     public Library(){
-        publications = new Publication[MAX_PUBLICATIONS];
+        publications = new Publication[INITIAL_COMPACITY];
     }
 
      public void addBook(Book book){
@@ -33,10 +34,31 @@ public class Library implements Serializable {
         addPublication(magazine);
      }
 
+     public void removePublication(Publication pub){
+         if (pub == null)
+             return;
+
+         final int NOT_FOUND = -1;
+         int found = NOT_FOUND;
+         int i=0;
+         while (i<publications.length && found == NOT_FOUND){
+             if (pub.equals(publications[i])){
+                 found = i;
+             } else {
+                 i++;
+             }
+         }
+         if (found != NOT_FOUND){
+             System.arraycopy(publications, found +1 , publications , found ,
+                     publications.length -found -1);
+             publicationsNumber--;
+         }
+     }
+
 
      public void addPublication(Publication pub) throws ArrayIndexOutOfBoundsException{
-         if (publicationsNumber == MAX_PUBLICATIONS){
-             throw new ArrayIndexOutOfBoundsException("MAX PUBLICATIONS " + MAX_PUBLICATIONS);
+         if (publicationsNumber == publications.length){
+             publications = Arrays.copyOf(publications , publications.length*2);
          }
          publications[publicationsNumber]=pub;
          publicationsNumber++;
