@@ -8,10 +8,13 @@ import data.Library;
 import data.Magazine;
 import data.Publication;
 
+import java.util.Arrays;
+
 public class LibraryUtils {
 
     public static void printBooks(Library lib) {
         Publication[] publications = lib.getPublications();
+        Arrays.sort(publications, new Library.AlphabeticalComparaotr());
         int publicationsNumber = lib.getPublicationsNumber();
         int countBooks = 0;
         for(int i=0; i<publicationsNumber; i++) {
@@ -28,6 +31,7 @@ public class LibraryUtils {
 
     public static void printMagazines(Library lib) {
         Publication[] publications = lib.getPublications();
+        Arrays.sort(publications, new Library.AlphabeticalComparaotr());
         int publicationsNumber = lib.getPublicationsNumber();
         int countMagazines = 0;
         for(int i=0; i<publicationsNumber; i++) {

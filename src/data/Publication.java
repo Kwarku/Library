@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Pawel on 07.06.2017.
  */
-public abstract class Publication implements Serializable{
+public abstract class Publication implements Serializable, Comparable<Publication>{
     private static final long serialVersionUID = 7910452641164094454L;
     private int year;
     private String title;
@@ -57,5 +57,10 @@ public abstract class Publication implements Serializable{
         result = 31 * result + (getTitle() != null ? getTitle().hashCode() : 0);
         result = 31 * result + (getPublisher() != null ? getPublisher().hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public int compareTo(Publication o) {
+        return title.compareTo(o.getTitle());
     }
 }
