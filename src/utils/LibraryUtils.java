@@ -5,14 +5,16 @@ package utils;
  */
 import data.*;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
 
 public class LibraryUtils {
 
-    // zmiana typu i petli
+
     public static void printBooks(Library lib) {
-        Collection<Publication> publications = lib.getPublications().values();
+        List<Publication> publications = new ArrayList<>();
+        publications.addAll(lib.getPublications().values());
+        Collections.sort(publications, new Library.AlphabeticalComparaotr());
+
         int countBooks = 0;
        for (Publication p: publications){
            if (p instanceof Book){
@@ -26,7 +28,10 @@ public class LibraryUtils {
     }
 
     public static void printMagazines(Library lib) {
-      Collection<Publication> publications = lib.getPublications().values();
+        List<Publication> publications = new ArrayList<>();
+        publications.addAll(lib.getPublications().values());
+
+        Collections.sort(publications, new Library.AlphabeticalComparaotr());
         int countMagazines = 0;
         for (Publication p: publications){
             if (p instanceof Magazine){
@@ -41,7 +46,14 @@ public class LibraryUtils {
 
     //dodanie metody wyswietlajaca liste uzytkownikow
     public static void printUsers(Library lib){
-        Collection<LibraryUser> users = lib.getUsers().values();
+        List<LibraryUser> users = new ArrayList<>();
+        users.addAll(lib.getUsers().values());
+        Collections.sort(users, new Comparator<LibraryUser>() {
+            @Override
+            public int compare(LibraryUser o1, LibraryUser o2) {
+                return o1.getLastName().compareTo(o2.getLastName());
+            }
+        });
         for (LibraryUser u : users){
             System.out.println(u);
         }
