@@ -8,6 +8,6 @@ public class LibraryApp {
         final String appName = "Biblioteka v0.92";
         System.out.println(appName);
         LibraryControl libraryControl = new LibraryControl();
-        libraryControl.controlLoop(null);
+        libraryControl.controlLoop();
     }
 }

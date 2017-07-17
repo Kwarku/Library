@@ -6,6 +6,7 @@ package utils;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import data.Book;
+import data.LibraryUser;
 import data.Magazine;
 
 public class DataReader {
@@ -23,11 +24,12 @@ public class DataReader {
         int number = 0;
         try {
             number = sc.nextInt();
+            sc.nextLine();
         } catch (InputMismatchException e) {
             throw new NumberFormatException("Liczba wprowadzona w niepoprawnej formie");
-        } finally {
-            sc.nextLine();
-        }
+        } /*finally {
+           sc.nextLine();
+        }*/
         return number;
     }
 
@@ -83,5 +85,17 @@ public class DataReader {
         }
 
         return new Magazine(title, publisher, language, year, month, day);
+    }
+
+    // dodanie nowej metody dodajacej uzytkownikow
+    public LibraryUser readAndCreateLibraryUser(){
+        System.out.println("Imie: ");
+        String firstName = sc.nextLine();
+        System.out.println("Nazwisko: ");
+        String lastName = sc.nextLine();
+        System.out.println("PESEL: ");
+        String pesel = sc.nextLine();
+
+        return new LibraryUser(firstName, lastName, pesel);
     }
 }

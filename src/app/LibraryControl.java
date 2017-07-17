@@ -3,6 +3,7 @@ package app;
 /**
  * Created by Pawel on 25.05.2017.
  */
+import data.LibraryUser;
 import utils.DataReader;
 import data.Book;
 import data.Library;
@@ -28,53 +29,57 @@ public class LibraryControl {
     public LibraryControl() {
         dataReader = new DataReader();
         fileManager = new FileManager();
-        try{
+        try {
             library = fileManager.readLibraryFromFile();
             System.out.println("Wczytano dane biblioteki z pliku ");
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (ClassNotFoundException | IOException e) {
             library = new Library();
-            System.out.println("Utworzono nowa bazę biblioteki. ");
+            System.out.println("Utworzono nową bazę biblioteki.");
         }
     }
 
     /*
      * Główna pętla programu, która pozwala na wybór opcji i interakcję
      */
-    public void controlLoop(Option option) {
-        printOptions();
-
-        try {
-            option = Option.createFromInt(dataReader.getInt());
-            switch (option) {
-                case ADD_BOOK:
-                    addBook();
-                    break;
-                case ADD_MAGAZINE:
-                    addMagazine();
-                    break;
-                case PRINT_BOOKS:
-                    printBooks();
-                    break;
-                case PRINT_MAGAZINES:
-                    printMagazines();
-                    break;
-                case EXIT:
-                    exit();
-
+    public void controlLoop() {
+        Option option = null;
+        while (option != Option.EXIT) {
+            try {
+                printOptions();
+                option = Option.createFromInt(dataReader.getInt());
+                switch (option) {
+                    case ADD_BOOK:
+                        addBook();
+                        break;
+                    case ADD_MAGAZINE:
+                        addMagazine();
+                        break;
+                    case PRINT_BOOKS:
+                        printBooks();
+                        break;
+                    case PRINT_MAGAZINES:
+                        printMagazines();
+                        break;
+                    //DODANE
+                    case ADD_USERS:
+                        addUser();
+                        break;
+                    case PRINT_USERS:
+                        printUsers();
+                        break;
+                    case EXIT:
+                        exit();
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Wprowadzono niepoprawne dane, publikacji nie dodano");
+            } catch (NumberFormatException | NoSuchElementException e) {
+                System.out.println("Wybrana opcja nie istnieje, wybierz ponownie:");
             }
-        } catch (InputMismatchException e) {
-            System.out.println("Wprowadzono niepoprawne dane, publikacji nie dodano");
-        } catch (NumberFormatException | NoSuchElementException e) {
-            System.out.println("Wybrana opcja nie istnieje, wybierz ponownie:");
+        }
+        // zamykamy strumień wejścia
+        dataReader.close();
         }
 
-        // zamykamy strumień wejścia
-        if (option == Option.EXIT) {
-            dataReader.close();
-        } else {
-            controlLoop(option);
-        }
-    }
 
     private void printOptions() {
         System.out.println("Wybierz opcję: ");
@@ -101,6 +106,15 @@ public class LibraryControl {
         LibraryUtils.printMagazines(library);
     }
 
+    private void addUser(){
+        LibraryUser user = dataReader.readAndCreateLibraryUser();
+        library.addUser(user);
+    }
+
+    private void printUsers(){
+        LibraryUtils.printUsers(library);
+    }
+
     private void exit() {
         fileManager.writeLibraryToFile(library);
     }
@@ -113,7 +127,9 @@ public class LibraryControl {
         ADD_BOOK(1, "Dodanie książki"),
         ADD_MAGAZINE(2,"Dodanie magazynu/gazety"),
         PRINT_BOOKS(3, "Wyświetlenie dostępnych książek"),
-        PRINT_MAGAZINES(4, "WYświetlenie dostępnych magazynów/gazet");
+        PRINT_MAGAZINES(4, "WYświetlenie dostępnych magazynów/gazet"),
+        ADD_USERS(5, "Dodanie nowego uzytkownika"),
+        PRINT_USERS(6,"Wyswietlenie listy uzytkownikow");
 
         private int value;
         private String description;
