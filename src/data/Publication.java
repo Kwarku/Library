@@ -1,22 +1,26 @@
 package data;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Created by Pawel on 07.06.2017.
  */
 public abstract class Publication implements Serializable, Comparable<Publication>{
     private static final long serialVersionUID = 7910452641164094454L;
-    private int year;
+
+    private LocalDate date;
     private String title;
     private String publisher;
 
     //settery gettery
-    public int getYear() {
-        return year;
+
+    public LocalDate getDate() {
+        return date;
     }
-    public void setYear(int year) {
-        this.year = year;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
     public String getTitle() {
         return title;
@@ -30,11 +34,13 @@ public abstract class Publication implements Serializable, Comparable<Publicatio
     public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
-
+    public int getYear() {
+        return date.getYear();
+    }
 
     // konstruktor
     protected Publication(int year,String title,String publisher){
-        setYear(year);
+        setDate(LocalDate.of(year,1,1));
         setTitle(title);
         setPublisher(publisher);
     }
@@ -43,20 +49,15 @@ public abstract class Publication implements Serializable, Comparable<Publicatio
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Publication)) return false;
-
         Publication that = (Publication) o;
-
-        if (getYear() != that.getYear()) return false;
-        if (getTitle() != null ? !getTitle().equals(that.getTitle()) : that.getTitle() != null) return false;
-        return getPublisher() != null ? getPublisher().equals(that.getPublisher()) : that.getPublisher() == null;
+        return Objects.equals(getDate(), that.getDate()) &&
+                Objects.equals(getTitle(), that.getTitle()) &&
+                Objects.equals(getPublisher(), that.getPublisher());
     }
 
     @Override
     public int hashCode() {
-        int result = getYear();
-        result = 31 * result + (getTitle() != null ? getTitle().hashCode() : 0);
-        result = 31 * result + (getPublisher() != null ? getPublisher().hashCode() : 0);
-        return result;
+        return Objects.hash(getDate(), getTitle(), getPublisher());
     }
 
     @Override

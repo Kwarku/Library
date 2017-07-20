@@ -1,8 +1,13 @@
 package data;
 
+import java.time.LocalDate;
+
 /**
  * Created by Pawel on 07.06.2017.
  */
+
+
+
 public class Magazine extends Publication {
     private static final long serialVersionUID = 2061400934707882805L;
 
@@ -12,18 +17,13 @@ public class Magazine extends Publication {
     private String language;
 
     // settery gettery
-    public int getMonth() {
-        return month;
+    public int getMonth(){
+        return getDate().getMonthValue();
     }
-    public void setMonth(int month) {
-        this.month = month;
+    public int getDay(){
+        return getDate().getDayOfMonth();
     }
-    public int getDay() {
-        return day;
-    }
-    public void setDay(int day) {
-        this.day = day;
-    }
+
     public String getLanguage() {
         return language;
     }
@@ -36,29 +36,15 @@ public class Magazine extends Publication {
                     String language,int year,int month,int day ){
         super(year,title,publisher);
         setLanguage(language);
-        setMonth(month);
-        setDay(day);
+        setDate(LocalDate.of(year,month,day));
     }
 
-    //wyswietlanie
     @Override
     public String toString() {
-        StringBuilder print = new StringBuilder();
-        print.append(getTitle());
-        print.append("; ");
-        print.append(getPublisher());
-        print.append("; ");
-        print.append(getYear());
-        print.append("; ");
-        print.append(getMonth());
-        print.append("; ");
-        print.append(getDay());
-        print.append("; ");
-        print.append(getLanguage());
-
-        return print.toString();
-
+        return getTitle() +  "; " + getPublisher() + "; " + getYear() + "-"
+                + getMonth() + "-" + getDay() + "; " + getLanguage();
     }
+
 
 
     // do porownania stringow i metody equals
